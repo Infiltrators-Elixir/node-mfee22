@@ -22,3 +22,4 @@ console.log(sum(10));
 console.log(sum(-50));
 
 console.log(sum(-20) + sum(40));
+console.log(sum(0));
