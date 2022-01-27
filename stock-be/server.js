@@ -20,6 +20,8 @@ let app = express();
 //利用cors中間件 從後端[允許]非同源的請求
 app.use(cors());
 
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
 // 設定 express 要用的樣版引擎(template engine)
 // 設定視圖檔案要放在哪裡
 app.set("views", path.join(__dirname, "views"));
@@ -84,6 +86,10 @@ app.get("/contact", (req, res, next) => {
   throw new Error("故意製造的錯誤");
   res.send("這是聯絡我們");
 });
+let authRouter = require("./routers/auth");
+app.use("/api/auth", authRouter);
+
+
 
 // RESTful API 的列表
 app.get("/api/stocks", async (req, res, next) => {
@@ -93,6 +99,7 @@ app.get("/api/stocks", async (req, res, next) => {
   // res.render ==> server-side render 會去找樣板
   res.json(data);
 });
+
 
 
 app.get("/api/stock/:stockId", async (req, res, next) => {

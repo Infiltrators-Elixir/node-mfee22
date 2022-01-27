@@ -1,6 +1,8 @@
 // stock-be/utils/db.js
 // npm i mysql2
 const mysql = require("mysql2");
+require("dotenv").config();
+
 
 // 把 createConnection -> createPool
 let pool = mysql.createPool({
