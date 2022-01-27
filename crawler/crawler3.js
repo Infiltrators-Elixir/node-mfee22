@@ -1,55 +1,29 @@
 const axios = require("axios");
-const { readFile } = require("fs");
+const { readFile } = require("fs/promises");
+const moment = require("moment");
 
-readFile("stock.txt", "utf-8", (err, stockNo) => {
-  if (err) {
-    console.log(err);
-    return;
+(async () => {
+  try {
+    // 根據變數去抓取資料
+    // 從 stock.txt 中讀出檔案代碼
+    let stockNo = await readFile("stock.txt", "utf-8");
+    let queryDate = moment().format("YYYYMMDD"); // 自動用今天的日期
+
+    let response = await axios.get(
+      "https://www.twse.com.tw/exchangeReport/STOCK_DAY",
+      {
+        // 這裡可以放一些設定
+        // params: 放 query string 的參數
+        params: {
+          response: "json",
+          date: queryDate,
+          stockNo,
+        },
+      }
+    );
+
+    console.log(response.data);
+  } catch (e) {
+    console.error(e);
   }
-   console.log(stockNo);
-   (async() => {
-    let queryDate = '20220115';
-    console.log(stockNo);
-    //TODO:從stock.txt中讀出代碼
-    
-    // let response = await axios.get(`https://www.twse.com.tw/exchangeReport/STOCK_DAY?response=json&date=${queryDate}&stockNo=2330&_=1641716372516`
-    // );
-    
-    let response = await axios.get("https://www.twse.com.tw/exchangeReport/STOCK_DAY",{
-    params:{
-        response:'json',
-        date:queryDate,
-        stockNo,
-    }
-    }
-    )
-    console.log(response.data)
-    
-    })()
-    
-
-
-
-  // insert to mysql
-});
-// console.log(stockNo);
-
-// (async() => {
-// let queryDate = '20220115';
-// console.log(stockNo);
-// //TODO:從stock.txt中讀出代碼
-
-// // let response = await axios.get(`https://www.twse.com.tw/exchangeReport/STOCK_DAY?response=json&date=${queryDate}&stockNo=2330&_=1641716372516`
-// // );
-
-// let response = await axios.get("https://www.twse.com.tw/exchangeReport/STOCK_DAY",{
-// params:{
-//     response:'json',
-//     date:queryDate,
-//     stockNo,
-// }
-// }
-// )
-// console.log(response.data)
-
-// })()
+})();

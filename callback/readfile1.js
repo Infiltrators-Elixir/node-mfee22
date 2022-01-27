@@ -1,11 +1,10 @@
 const { readFile } = require("fs");
 
-readFile("text.txt", "utf-8", (err, data) => {
+readFile("test.txt", "utf-8", (err, data) => {
   if (err) {
-    console.log(err);
+    console.error(err);
     return;
   }
   console.log(data);
-
   // insert to mysql
 });

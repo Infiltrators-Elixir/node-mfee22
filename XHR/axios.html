@@ -1,37 +1,27 @@
-<!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-</head>
-
-<body>
-    <button id="asyncBtn">非同步Btn</button>
+    <title>XHR</title>
+  </head>
+  <body>
+    <button id="asyncBtn">非同步</button>
     <div id="response">message</div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-        var responseDom = document.getElementById("response");
-        var asyncBtn = document.getElementById("asyncBtn");
-        asyncBtn.addEventListener("click", function () {
-            responseDom.innerText = "開始非同步請求";
-            axios
-                .get("http://34.221.173.92:3000/data")
-                .then(function (response) {
-                    console.log(response.data);
-                }
-                )
-                .catch(function (error) {
-                    // handle error
-                    console.log(error);
-                }
-                );
-        }
-        );
+      var responseDom = document.getElementById("response");
 
+      var asyncBtn = document.getElementById("asyncBtn");
+      asyncBtn.addEventListener("click", function () {
+        responseDom.innerText = "開始「非」同步請求";
+        axios
+          .get("http://34.221.173.92:3000/data")
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      });
     </script>
-</body>
-
+  </body>
 </html>
